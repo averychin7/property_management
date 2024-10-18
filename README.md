@@ -20,7 +20,7 @@
 ### File and Folder structure in server
 
 - colocation structure
-- kebab-case for different components in a feature folder
+- kebab-case for different components in a feature folder except testing files
 
 ```
 ├── api
@@ -36,6 +36,7 @@ feature
 ├── middleware                              // general middlware (i.e auth)
 ├── utils                                   // general utills functions
 ├── tests
+│   ├── [feature].test.ts                   // testing the services file for each feature
 ├── db
 │   ├── schema                              // all the model from database
 │   ├── index.js
