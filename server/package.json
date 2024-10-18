@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon index.ts",
+    "dev": "concurrently \"nodemon index.ts\"  \"(cd ../client/webapp && npm run dev) \"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "concurrently": "^9.0.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   }

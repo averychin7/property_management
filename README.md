@@ -2,15 +2,21 @@
 
 Property Management software
 
-This repo consist the front and backend of the app
+### Project Structure
 
-- client: Vite/React
-- server: Node/Express
-  - database: Drizzle/PostgreSQL
+- `/client`: all the front end, currently only have `/webapp`
+- `/server`: backend
 
 ### Pre-requisite
 
 - Node v22
+- Postgres 16
+
+### Tech stack
+
+- Vite / React
+- Node / Express
+- Drizzle / Postgres
 
 ### File and Folder structure in server
 
