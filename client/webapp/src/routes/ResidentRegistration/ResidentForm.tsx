@@ -4,10 +4,10 @@ const allCondo = [
   { name: "Condo W" },
 ];
 
-const ResidentRegistrationForm = () => {
+const ResidentForm = () => {
   return (
-    <div>
-      <h1 className="pb-12">Resident Registration Form</h1>
+    <div className="flex flex-col items-center">
+      <h1 className="py-12">Resident Registration Form</h1>
       <div className="min-w-full min-h-full flex justify-center items-center">
         <form className="flex flex-col h-full  gap-y-5">
           {/* property selection */}
@@ -93,4 +93,4 @@ const ResidentRegistrationForm = () => {
   );
 };
 
-export default ResidentRegistrationForm;
+export default ResidentForm;

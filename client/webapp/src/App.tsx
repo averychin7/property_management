@@ -1,4 +1,4 @@
-import ResidentRegistrationForm from "./pages/ResidentRegistrationForm";
+import ResidentRegistrationForm from "./routes/ResidentRegistration";
 
 function App() {
   return (
