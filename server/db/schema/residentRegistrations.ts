@@ -1,15 +1,15 @@
 import { date, pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { properties } from "./properties";
+import { buildings } from "./buildings";
 import { usersTable } from "./users";
 import { relations } from "drizzle-orm";
 
-export const residentRegistration = pgTable("residentRegistration", {
+export const residentRegistrations = pgTable("residentRegistrations", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  propertyId: text("property_id")
+  buildingId: text("building_id")
     .notNull()
-    .references(() => properties.id),
+    .references(() => buildings.id),
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id),
@@ -24,14 +24,14 @@ export const residentRegistration = pgTable("residentRegistration", {
 });
 
 export const residentRegRelations = relations(
-  residentRegistration,
+  residentRegistrations,
   ({ one }) => ({
-    property: one(properties, {
-      fields: [residentRegistration.propertyId],
-      references: [properties.id],
+    building: one(buildings, {
+      fields: [residentRegistrations.buildingId],
+      references: [buildings.id],
     }),
     user: one(usersTable, {
-      fields: [residentRegistration.userId],
+      fields: [residentRegistrations.userId],
       references: [usersTable.id],
     }),
   })

@@ -8,7 +8,7 @@ const residentRegistration = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { accessCode, fName, lName } = req.body;
+  const { accessCode, property, unitNo, ownership } = req.body;
 
   // validation
 
