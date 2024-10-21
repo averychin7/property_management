@@ -1,3 +1,5 @@
+import { buildings } from "../../db/schema/buildings";
+
 export enum BUILDING_TYPE {
   "Condominium",
   "Apartment",
@@ -5,9 +7,4 @@ export enum BUILDING_TYPE {
 }
 
 // create building input
-export type buildingInput = {
-  name: string;
-  type: BUILDING_TYPE;
-  sharedProperty?: string;
-  accessCode?: string;
-};
+export type NewBuilding = typeof buildings.$inferInsert;

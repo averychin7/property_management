@@ -1,19 +1,32 @@
-import { BUILDING_TYPE } from "./types";
+import { NewBuilding } from "./types";
+import { db } from "../../db/db";
+import { buildings } from "../../db/schema/buildings";
 
 /**
  * Create one building
  * @param {buildingInfo}
  * @returns
  */
-export const createBuilding = (buildingInfo: {
-  name: string;
-  type: BUILDING_TYPE;
-  complex?: string;
-  accessCode?: string;
-}) => {
-  // if no complex - create one
+export const createBuilding = async (data: NewBuilding) => {
+  const building = await db
+    .insert(buildings)
+    .values(data)
+    .returning({ insertedId: buildings.id });
 };
 
 /**
- * Create multiple buildings
+ * Edit building
  */
+export const editBuilding = async () => {
+  // await db.update(buildings).set
+};
+
+/**
+ * Delete building
+ */
+export const deleteBuilding = async () => {};
+
+/**
+ * All Building
+ */
+export const getAllBuilding = async () => {};
