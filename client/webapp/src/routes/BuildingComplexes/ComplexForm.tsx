@@ -6,8 +6,17 @@ const ComplexForm = () => {
   const [buildingList, setBuildingList] = useState<Building[]>([]);
   const [currBuilding, setCurrentBuilding] = useState(0);
 
+  const [complexForm, setComplexForm] = useState({
+    name: "",
+  });
+
   const submitComplex = async (e: any) => {
     e.preventDefault();
+    const formData = {
+      complex: { ...complexForm },
+      buildingList: buildingList,
+    };
+    console.log(formData);
     // const response = await fetch("/api/building/create", {
     //   method: "POST",
     //   body: JSON.stringify(formData),
@@ -18,6 +27,12 @@ const ComplexForm = () => {
     // });
     // console.log(response);
   };
+
+  // const removeBuilding = (target: number) => {
+  //   const frontList = buildingList.slice(0, target);
+  //   const lastList = buildingList.slice(target + 1);
+  //   setBuildingList([...frontList, ...lastList]);
+  // };
 
   return (
     <form
@@ -33,6 +48,10 @@ const ComplexForm = () => {
           type="text"
           className="border-solid border-black border p-2"
           id="name"
+          value={complexForm.name}
+          onChange={(e) =>
+            setComplexForm({ ...complexForm, name: e.target.value })
+          }
         ></input>
       </div>
 
@@ -60,15 +79,10 @@ export default ComplexForm;
 const BuildingCard = ({ building }: { building: Building }) => {
   // delete + edit building
 
-  // const removeBuilding = (target: number) => {
-  //   const frontList = buildingList.slice(0, target);
-  //   const lastList = buildingList.slice(target + 1);
-  //   setBuildingList([...frontList, ...lastList]);
-  // };
-
   // const editBuilding = (data: {}) => {};
   return (
     <div className="bg-slate-200 p-4 mb-4">
+      <button className="mb-4">Delete</button>
       <p>Building Name: {building.name}</p>
       <p>Address: {building.address}</p>
       <p>Access Code: {building.accessCode} </p>
