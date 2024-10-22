@@ -11,7 +11,7 @@ export const buildingCreation = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { name, accessCode, noOfUnits, noOfFloors } = req.body;
+  const { name, accessCode, noOfUnits, noOfFloors, address } = req.body;
 
   // validation
 
@@ -24,7 +24,7 @@ export const buildingCreation = async (
     noOfFloors,
     createdAt: new Date(),
     updatedAt: new Date(),
-    address: "",
+    address,
   };
   const building = await createBuilding(buildingData);
 

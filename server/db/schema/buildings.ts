@@ -17,8 +17,8 @@ export const buildings = pgTable("buildings", {
   type: text("type").notNull(), // all residentials
   accessCode: text("access_code").notNull(),
   complexId: text("complex_id"),
-  noOfUnits: integer("no_of_unit"),
-  noOfFloors: integer("no_of_floor"),
+  noOfUnits: integer("no_of_units"),
+  noOfFloors: integer("no_of_floors"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull(),
   address: varchar("address", { length: 255 }).notNull(),

@@ -3,9 +3,8 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
-import Building from "./routes/Building/index.tsx";
+import Building from "./routes/BuildingComplexes/index.tsx";
 import ResidentRegistration from "./routes/ResidentRegistration/index.tsx";
-import Complex from "./routes/Complex/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,10 +18,6 @@ const router = createBrowserRouter([
   {
     path: "/residentForm",
     element: <ResidentRegistration />,
-  },
-  {
-    path: "/complexForm",
-    element: <Complex />,
   },
 ]);
 
