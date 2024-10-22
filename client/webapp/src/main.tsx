@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
-import Building from "./routes/BuildingComplexes/index.tsx";
-import ResidentRegistration from "./routes/ResidentRegistration/index.tsx";
+import BuildingComplex from "./routes/BuildingComplexes/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,12 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/buildingForm",
-    element: <Building />,
-  },
-  {
-    path: "/residentForm",
-    element: <ResidentRegistration />,
+    path: "/buildingComplex",
+    element: <BuildingComplex />,
   },
 ]);
 

@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { createBuilding } from "./services";
+import { addBuilding } from "./services";
 import { NewBuilding } from "./types";
-import { createComplex } from "../complex/services";
 
-/**
- * Create a Resident Registration Entry
- */
 export const buildingCreation = async (
   req: Request,
   res: Response,
@@ -26,7 +22,8 @@ export const buildingCreation = async (
     updatedAt: new Date(),
     address,
   };
-  const building = await createBuilding(buildingData);
+
+  const building = await addBuilding(buildingData);
 
   // return building + access code
   res.status(200).json({ success: true, data: building });

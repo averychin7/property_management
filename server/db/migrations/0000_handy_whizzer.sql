@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS "buildings" (
 	"type" text NOT NULL,
 	"access_code" text NOT NULL,
 	"complex_id" text,
-	"no_of_unit" integer,
-	"no_of_floor" integer,
+	"no_of_units" integer,
+	"no_of_floors" integer,
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	"address" varchar(255) NOT NULL

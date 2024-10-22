@@ -2,7 +2,8 @@ import express, { Express, Request, Response, Application } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-import building from "./api/building/routes";
+import buildings from "./api/buildings/routes";
+import complexes from "./api/complexes/routes";
 
 //For env File
 dotenv.config();
@@ -18,7 +19,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // routes
-app.use("/api/building", building);
+app.use("/api/complexes", complexes);
+app.use("/api/buildings", buildings);
 
 app.listen(port, () => {
   console.log(`Server loaded at http://localhost:${port}`);

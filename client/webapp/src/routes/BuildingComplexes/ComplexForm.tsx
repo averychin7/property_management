@@ -17,15 +17,15 @@ const ComplexForm = () => {
       buildingList: buildingList,
     };
     console.log(formData);
-    // const response = await fetch("/api/building/create", {
-    //   method: "POST",
-    //   body: JSON.stringify(formData),
-    //   headers: {
-    //     "Content-type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    // });
-    // console.log(response);
+    const response = await fetch("/api/complexes/create", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    console.log(response);
   };
 
   // const removeBuilding = (target: number) => {
