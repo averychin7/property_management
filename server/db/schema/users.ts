@@ -1,11 +1,12 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { text, pgTable, varchar } from "drizzle-orm/pg-core";
 import { residentRegistrations } from "./residentRegistrations";
 
 export const usersTable = pgTable("users", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: varchar({ length: 255 }).notNull(),
-  age: integer().notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
 });
 

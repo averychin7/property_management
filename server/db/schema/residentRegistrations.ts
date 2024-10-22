@@ -7,12 +7,8 @@ export const residentRegistrations = pgTable("residentRegistrations", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  buildingId: text("building_id")
-    .notNull()
-    .references(() => buildings.id),
-  userId: text("user_id")
-    .notNull()
-    .references(() => usersTable.id),
+  buildingId: text("building_id").references(() => buildings.id),
+  userId: text("user_id").references(() => usersTable.id),
   unitNo: text("unit_no").notNull(),
   ownership: varchar("ownership", { length: 255 }),
   submittedAt: date("sumittedAt"),

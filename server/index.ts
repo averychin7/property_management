@@ -12,7 +12,6 @@ const port = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Express & TypeScript Server");

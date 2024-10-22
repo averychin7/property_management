@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { residentRegistrations } from "./residentRegistrations";
 import { complexes } from "./complexes";
 
@@ -13,6 +19,10 @@ export const buildings = pgTable("buildings", {
   complexId: text("complex_id"),
   noOfUnits: integer("no_of_unit"),
   noOfFloors: integer("no_of_floor"),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull(),
+  address: varchar("address", { length: 255 }).notNull(),
+  // createdby, updatedBy - when have users
 });
 
 export const buildingRelations = relations(buildings, ({ many, one }) => ({

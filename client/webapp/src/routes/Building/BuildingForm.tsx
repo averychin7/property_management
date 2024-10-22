@@ -3,6 +3,7 @@ import { useState } from "react";
 const BuildingForm = () => {
   const [formData, setFormData] = useState({
     name: "",
+    address: "",
     accessCode: "",
     noOfUnit: 1,
     noOfFloor: 1,
@@ -23,9 +24,12 @@ const BuildingForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center ">
       <h1 className="py-12">Create Building</h1>
-      <form className="flex flex-col h-full gap-y-5" onSubmit={submitBuilding}>
+      <form
+        className="flex flex-col h-full w-2/4 gap-y-5"
+        onSubmit={submitBuilding}
+      >
         {/* building name */}
         <div className="flex flex-col">
           <label className="font-semibold mb-2" htmlFor="name">
@@ -40,21 +44,39 @@ const BuildingForm = () => {
           ></input>
         </div>
 
+        {/* building address */}
+        <div className="flex flex-col">
+          <label className="font-semibold mb-2" htmlFor="name">
+            Address
+          </label>
+          <input
+            type="text"
+            className="border-solid border-black border p-2"
+            id="name"
+            value={formData.address}
+            onChange={(e) =>
+              setFormData({ ...formData, address: e.target.value })
+            }
+          ></input>
+        </div>
+
         {/* access code */}
         <div className="flex flex-col">
           <label className="font-semibold mb-2" htmlFor="unitNo">
             Access Code
           </label>
-          <input
-            type="text"
-            className="border-solid border-black border p-2"
-            id="accessCode"
-            value={formData.accessCode}
-            onChange={(e) =>
-              setFormData({ ...formData, accessCode: e.target.value })
-            }
-          ></input>
-          <button>Random Code</button>
+          <div>
+            <input
+              type="text"
+              className="border-solid border-black border p-2 mr-4"
+              id="accessCode"
+              value={formData.accessCode}
+              onChange={(e) =>
+                setFormData({ ...formData, accessCode: e.target.value })
+              }
+            ></input>
+            <button className="bg-blue-500 text-white">Random Code</button>
+          </div>
         </div>
 
         {/* no of units */}
@@ -89,7 +111,7 @@ const BuildingForm = () => {
           ></input>
         </div>
 
-        <button>Create</button>
+        <button className="bg-blue-500 text-white">Create</button>
       </form>
     </div>
   );
