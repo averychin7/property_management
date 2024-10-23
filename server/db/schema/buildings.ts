@@ -16,7 +16,9 @@ export const buildings = pgTable("buildings", {
   name: text("name").notNull(),
   type: text("type").notNull(), // all residentials
   accessCode: text("access_code").notNull(),
-  complexId: text("complex_id"),
+  complexId: text("complex_id")
+    .notNull()
+    .references(() => complexes.id),
   noOfUnits: integer("no_of_units"),
   noOfFloors: integer("no_of_floors"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull(),

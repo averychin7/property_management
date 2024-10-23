@@ -16,7 +16,6 @@ const ComplexForm = () => {
       complex: { ...complexForm },
       buildingList: buildingList,
     };
-    console.log(formData);
     const response = await fetch("/api/complexes/create", {
       method: "POST",
       body: JSON.stringify(formData),
@@ -25,7 +24,10 @@ const ComplexForm = () => {
         Accept: "application/json",
       },
     });
-    console.log(response);
+    if (response.ok) {
+      setComplexForm({ name: "" });
+      setBuildingList([]);
+    }
   };
 
   // const removeBuilding = (target: number) => {

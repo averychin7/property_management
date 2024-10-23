@@ -1,24 +1,35 @@
 import { NewBuilding } from "./types";
 import { db } from "../../db/db";
 import { buildings } from "../../db/schema/buildings";
+import { complexes } from "../../db/schema/complexes";
+import { eq, sql } from "drizzle-orm";
 
 /**
  * Add one building
  */
 export const addBuilding = async (data: NewBuilding) => {
-  // create building
-  const newBuilding = await db
-    .insert(buildings)
-    .values({ ...data, createdAt: new Date(), updatedAt: new Date() })
-    .returning({ insertedId: buildings.id });
+  try {
+    const newBuilding = await db
+      .insert(buildings)
+      .values({ ...data, createdAt: new Date(), updatedAt: new Date() })
+      .returning();
 
-  return newBuilding;
+    // update complexes building count
+    await db
+      .update(complexes)
+      .set({ noOfBuildings: sql`${complexes.noOfBuildings} + 1` })
+      .where(eq(complexes.id, data.complexId));
+
+    return newBuilding;
+  } catch (error: any) {
+    throw error;
+  }
 };
 
 /**
- * Add buildings in bulk
+ * Add mulitple building in one complex
  */
-export const addMultipleBuilding = async (buildingList: NewBuilding[]) => {
+export const addMultiBuilding = async (buildingList: NewBuilding[]) => {
   buildingList.map((b) => {
     b.createdAt = new Date();
     b.updatedAt = new Date();
@@ -28,6 +39,7 @@ export const addMultipleBuilding = async (buildingList: NewBuilding[]) => {
     .insert(buildings)
     .values(buildingList)
     .returning();
+
   return newBuildings;
 };
 
@@ -44,6 +56,46 @@ export const editBuilding = async () => {
 export const deleteBuilding = async () => {};
 
 /**
- * All Building
+ * Fetch all the buildings
  */
-export const getAllBuilding = async () => {};
+export const fetchAllBuilding = async () => {
+  try {
+    const allBuildings = await db.select().from(buildings);
+
+    return allBuildings;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Fetch single building details
+ * @param buildingId
+ * @returns
+ */
+export const fetchBuildingDetails = async (buildingId: string) => {
+  try {
+    const singleBuilding = await db
+      .select()
+      .from(buildings)
+      .where(eq(buildings.id, buildingId));
+    return singleBuilding;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Fetch buildings that is belongs to a complex
+ */
+export const fetchComplexBuilding = async (complexId: string) => {
+  try {
+    const complexBuildings = await db
+      .select()
+      .from(buildings)
+      .where(eq(buildings.complexId, complexId));
+    return complexBuildings;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import BuildingComplex from "./routes/BuildingComplexes/index.tsx";
+import AllComplexes from "./routes/BuildingComplexes/AllComplexes.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/buildingComplex",
     element: <BuildingComplex />,
+  },
+  {
+    path: "/allComplexes",
+    element: <AllComplexes />,
   },
 ]);
 

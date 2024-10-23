@@ -7,6 +7,7 @@ export const complexes = pgTable("complexes", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: varchar("name", { length: 255 }).notNull(),
+  noOfBuildings: integer("no_of_buildings").notNull().default(1),
 });
 
 export const complexRelations = relations(complexes, ({ many }) => ({

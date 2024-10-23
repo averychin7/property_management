@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS "buildings" (
 	"name" text NOT NULL,
 	"type" text NOT NULL,
 	"access_code" text NOT NULL,
-	"complex_id" text,
+	"complex_id" text NOT NULL,
 	"no_of_units" integer,
 	"no_of_floors" integer,
 	"created_at" timestamp NOT NULL,
@@ -34,6 +34,12 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"email" varchar(255) NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "buildings" ADD CONSTRAINT "buildings_complex_id_complexes_id_fk" FOREIGN KEY ("complex_id") REFERENCES "public"."complexes"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "residentRegistrations" ADD CONSTRAINT "residentRegistrations_building_id_buildings_id_fk" FOREIGN KEY ("building_id") REFERENCES "public"."buildings"("id") ON DELETE no action ON UPDATE no action;
