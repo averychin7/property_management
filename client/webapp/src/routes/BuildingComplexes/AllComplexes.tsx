@@ -1,5 +1,3 @@
-import React from "react";
-
 const AllComplexes = () => {
   return (
     <div className="mx-24 mt-24">
