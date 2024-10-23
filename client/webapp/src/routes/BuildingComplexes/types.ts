@@ -6,3 +6,9 @@ export type Building = {
   noOfUnits: number;
   noOfFloors: number;
 };
+
+export type Complex = {
+  id?: string;
+  name: string;
+  noOfBuildings: number;
+};

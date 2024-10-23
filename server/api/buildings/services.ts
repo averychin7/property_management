@@ -73,7 +73,7 @@ export const fetchAllBuilding = async () => {
  * @param buildingId
  * @returns
  */
-export const fetchBuildingDetails = async (buildingId: string) => {
+export const fetchSingleBuilding = async (buildingId: string) => {
   try {
     const singleBuilding = await db
       .select()

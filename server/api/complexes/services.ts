@@ -30,13 +30,18 @@ export const addComplex = async (
 };
 
 export const fetchAllComplex = async () => {
-  const allComplexes = await db
-    .select()
-    .from(complexes)
-    .rightJoin(buildings, eq(complexes.id, buildings.complexId));
+  const allComplexes = await db.select().from(complexes);
+  return allComplexes;
+};
 
-  // group the sql return data to [{complex: {} , buildings: []}]
-
-  console.log(allComplexes);
-  return;
+export const fetchSingleComplex = async (complexId: string) => {
+  try {
+    const singleComplex = await db
+      .select()
+      .from(complexes)
+      .where(eq(complexes.id, complexId));
+    return singleComplex;
+  } catch (error) {
+    throw error;
+  }
 };

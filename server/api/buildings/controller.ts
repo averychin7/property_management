@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {
   addBuilding,
   fetchAllBuilding,
-  fetchBuildingDetails,
+  fetchSingleBuilding,
   fetchComplexBuilding,
 } from "./services";
 import { NewBuilding } from "./types";
@@ -40,7 +40,7 @@ export const buildingCreation = async (
   }
 };
 
-export const buildingList = async (
+export const allBuildings = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -61,9 +61,9 @@ export const singleBuilding = async (
 ) => {
   try {
     const { buildingId } = req.params;
-    const buildings = await fetchBuildingDetails(buildingId);
+    const building = await fetchSingleBuilding(buildingId);
 
-    res.status(200).json({ success: true, data: buildings });
+    res.status(200).json({ success: true, data: building });
   } catch (error) {
     res.status(500).json({ success: false, error: error, message: `` });
   }
