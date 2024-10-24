@@ -2,7 +2,7 @@ import ResidentRegistrationForm from "./routes/ResidentRegistration";
 
 function App() {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div>
       <ResidentRegistrationForm />
     </div>
   );

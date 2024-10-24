@@ -1,20 +1,20 @@
 import { Request, Response, NextFunction } from "express";
+import { createResidentForm } from "./services";
+import { TResidentRegisterForm } from "./types";
 
 /**
  * Create a Resident Registration Entry
  */
-const residentRegistration = async (
+export const residentRegistration = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { accessCode, property, unitNo, ownership } = req.body;
+  const registerData: TResidentRegisterForm = req.body;
 
-  // validation
+  await createResidentForm(registerData);
 
-  // create db entry
-
-  res.status(200);
+  res.status(200).json({ success: true });
   try {
   } catch (error) {
     res.status(500);

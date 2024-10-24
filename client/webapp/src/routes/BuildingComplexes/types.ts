@@ -1,4 +1,4 @@
-export type Building = {
+export type TBuilding = {
   id?: string;
   name: string;
   address: string;
@@ -7,7 +7,7 @@ export type Building = {
   noOfFloors: number;
 };
 
-export type Complex = {
+export type TComplex = {
   id?: string;
   name: string;
   noOfBuildings: number;

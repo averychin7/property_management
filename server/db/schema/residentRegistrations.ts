@@ -1,4 +1,4 @@
-import { date, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { timestamp, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { buildings } from "./buildings";
 import { usersTable } from "./users";
 import { relations } from "drizzle-orm";
@@ -11,11 +11,9 @@ export const residentRegistrations = pgTable("residentRegistrations", {
   userId: text("user_id").references(() => usersTable.id),
   unitNo: text("unit_no").notNull(),
   ownership: varchar("ownership", { length: 255 }),
-  submittedAt: date("sumittedAt"),
-  updatedAt: date("updatedAt"),
-  updatedBy: text("updatedBy")
-    .notNull()
-    .references(() => usersTable.id),
+  submittedAt: timestamp("sumittedAt", { mode: "date" }),
+  updatedAt: timestamp("updatedAt", { mode: "date" }),
+  updatedBy: text("updatedBy").references(() => usersTable.id),
   status: text("status"),
 });
 

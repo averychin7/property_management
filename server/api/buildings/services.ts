@@ -2,7 +2,7 @@ import { NewBuilding } from "./types";
 import { db } from "../../db/db";
 import { buildings } from "../../db/schema/buildings";
 import { complexes } from "../../db/schema/complexes";
-import { eq, sql } from "drizzle-orm";
+import { eq, getTableColumns, sql } from "drizzle-orm";
 
 /**
  * Add one building

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import BuildingForm from "./BuildingForm";
-import { Building } from "./types";
+import { TBuilding } from "./types";
 
 const ComplexForm = () => {
-  const [buildingList, setBuildingList] = useState<Building[]>([]);
+  const [buildingList, setBuildingList] = useState<TBuilding[]>([]);
   const [currBuilding, setCurrentBuilding] = useState(0);
 
   const [complexForm, setComplexForm] = useState({
@@ -78,7 +78,7 @@ const ComplexForm = () => {
 
 export default ComplexForm;
 
-const BuildingCard = ({ building }: { building: Building }) => {
+const BuildingCard = ({ building }: { building: TBuilding }) => {
   // delete + edit building
 
   // const editBuilding = (data: {}) => {};

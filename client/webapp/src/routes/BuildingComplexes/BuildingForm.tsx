@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
-import { Building } from "./types";
+import { TBuilding } from "./types";
 
-const INITIAL_BUILDING: Building = {
+const INITIAL_BUILDING: TBuilding = {
   name: "",
   address: "",
   accessCode: "",
@@ -13,9 +13,9 @@ const BuildingForm = ({
   buildingList,
   setBuildingList,
 }: {
-  buildingList: Building[];
+  buildingList: TBuilding[];
   setBuildingList: (
-    value: Building[] | ((prevState: Building[]) => Building[])
+    value: TBuilding[] | ((prevState: TBuilding[]) => TBuilding[])
   ) => void;
 }) => {
   const [formData, setFormData] = useState(INITIAL_BUILDING);

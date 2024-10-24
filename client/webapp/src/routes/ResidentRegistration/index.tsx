@@ -1,11 +1,7 @@
 import ResidentForm from "./ResidentForm";
 
 const ResidentRegistration = () => {
-  return (
-    <div>
-      <ResidentForm />
-    </div>
-  );
+  return <ResidentForm />;
 };
 
 export default ResidentRegistration;
