@@ -1,10 +1,8 @@
 import { NewComplex } from "./types";
-import { db } from "../../db/db";
-import { complexes } from "../../db/schema/complexes";
+import * as complexesDAL from "./dal";
+
 import { NewBuilding } from "../buildings/types";
 import { addMultiBuilding } from "../buildings/services";
-import { eq } from "drizzle-orm";
-import * as complexesDAL from "./dal";
 
 /**
  * Add a complex

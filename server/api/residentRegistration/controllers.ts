@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createResidentForm } from "./services";
+import { registerResident } from "./services";
 import { TResidentRegisterForm } from "./types";
 
 /**
@@ -12,7 +12,7 @@ export const residentRegistration = async (
 ) => {
   const registerData: TResidentRegisterForm = req.body;
 
-  await createResidentForm(registerData);
+  await registerResident(registerData);
 
   res.status(200).json({ success: true });
   try {

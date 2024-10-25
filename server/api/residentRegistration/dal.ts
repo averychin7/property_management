@@ -11,7 +11,7 @@ export const createRegistration = async (residentForm: any) => {
       updatedAt: new Date(),
       status: "Under Review",
     })
-    .returning({ insertedId: residentRegistrations.id });
+    .returning();
 
-  return registered;
+  return registered[0];
 };

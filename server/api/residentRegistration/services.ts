@@ -1,9 +1,8 @@
-import { db } from "../../db/db";
-import { residentRegistrations } from "../../db/schema/residentRegistrations";
+import * as residentRegistrationDAL from "./dal";
 import { findBuildingById } from "../buildings/dal";
-import { TResidentRegistration, TResidentRegisterForm } from "./types";
+import { TResidentRegisterForm } from "./types";
 
-export const accessCodeValidation = async (
+export const validateAccessCode = async (
   buildingId: string,
   accessCode: string
 ): Promise<boolean> => {
@@ -18,14 +17,13 @@ export const accessCodeValidation = async (
 };
 
 /**
- *
+ * Create A resident registration entry
  * @returns
  *   null : no resident created
  *
  */
-export const createResidentForm = async (formData: TResidentRegisterForm) => {
-  // validate access code
-  const isValidAccessCode = await accessCodeValidation(
+export const registerResident = async (formData: TResidentRegisterForm) => {
+  const isValidAccessCode = await validateAccessCode(
     formData.buildingId,
     formData.accessCode
   );
@@ -34,15 +32,7 @@ export const createResidentForm = async (formData: TResidentRegisterForm) => {
     return { success: false, message: "Invalid Access Code" };
   }
 
-  const registered = await db
-    .insert(residentRegistrations)
-    .values({
-      ...formData,
-      submittedAt: new Date(),
-      updatedAt: new Date(),
-      status: "Under Review",
-    })
-    .returning({ insertedId: residentRegistrations.id });
+  const registered = await residentRegistrationDAL.createRegistration(formData);
 
   return { success: true, data: registered, message: "Resident registered!" };
 };
