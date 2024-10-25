@@ -8,7 +8,7 @@ const INITIAL_REGISTRATION: TResidentRegisterForm = {
   accessCode: "",
   unitNo: "",
   ownership: "lease",
-};
+};6
 
 const ResidentForm = () => {
   const [formData, setFormData] =

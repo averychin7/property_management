@@ -1,18 +1,14 @@
 import { NewBuilding } from "./types";
 import { db } from "../../db/db";
-import { buildings } from "../../db/schema/buildings";
 import { complexes } from "../../db/schema/complexes";
-import { eq, getTableColumns, sql } from "drizzle-orm";
-
+import { eq, sql } from "drizzle-orm";
+import * as buildingDAL from "./dal";
 /**
  * Add one building
  */
 export const addBuilding = async (data: NewBuilding) => {
   try {
-    const newBuilding = await db
-      .insert(buildings)
-      .values({ ...data, createdAt: new Date(), updatedAt: new Date() })
-      .returning();
+    const newBuilding = await buildingDAL.createSingleBuilding(data);
 
     // update complexes building count
     await db
@@ -35,32 +31,17 @@ export const addMultiBuilding = async (buildingList: NewBuilding[]) => {
     b.updatedAt = new Date();
   });
 
-  const newBuildings = await db
-    .insert(buildings)
-    .values(buildingList)
-    .returning();
+  const newBuildings = await buildingDAL.createMulitpleBuildings(buildingList);
 
   return newBuildings;
 };
-
-/**
- * Edit building
- */
-export const editBuilding = async () => {
-  // await db.update(buildings).set
-};
-
-/**
- * Delete building
- */
-export const deleteBuilding = async () => {};
 
 /**
  * Fetch all the buildings
  */
 export const fetchAllBuilding = async () => {
   try {
-    const allBuildings = await db.select().from(buildings);
+    const allBuildings = await buildingDAL.findAllBuildings();
 
     return allBuildings;
   } catch (error) {
@@ -75,10 +56,7 @@ export const fetchAllBuilding = async () => {
  */
 export const fetchSingleBuilding = async (buildingId: string) => {
   try {
-    const singleBuilding = await db
-      .select()
-      .from(buildings)
-      .where(eq(buildings.id, buildingId));
+    const singleBuilding = await buildingDAL.findBuildingById(buildingId);
     return singleBuilding;
   } catch (error) {
     throw error;
@@ -90,10 +68,9 @@ export const fetchSingleBuilding = async (buildingId: string) => {
  */
 export const fetchComplexBuilding = async (complexId: string) => {
   try {
-    const complexBuildings = await db
-      .select()
-      .from(buildings)
-      .where(eq(buildings.complexId, complexId));
+    const complexBuildings = await buildingDAL.findBuildingsByComplexId(
+      complexId
+    );
     return complexBuildings;
   } catch (error) {
     throw error;

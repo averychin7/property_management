@@ -1,7 +1,23 @@
 import { db } from "../../db/db";
+import { buildings } from "../../db/schema/buildings";
 import { residentRegistrations } from "../../db/schema/residentRegistrations";
+import { findBuildingById } from "../buildings/dal";
 import { TResidentRegistration, TResidentRegisterForm } from "./types";
-import { accessCodeValidation } from "./validation";
+import { eq } from "drizzle-orm";
+
+export const accessCodeValidation = async (
+  buildingId: string,
+  accessCode: string
+): Promise<boolean> => {
+  const building = await findBuildingById(buildingId);
+
+  // compare both of the access code
+  if (building.accessCode === accessCode) {
+    return true;
+  }
+
+  return false;
+};
 
 /**
  *
@@ -19,8 +35,6 @@ export const createResidentForm = async (formData: TResidentRegisterForm) => {
   if (!isValidAccessCode) {
     return { success: false, message: "Invalid Access Code" };
   }
-
-  // todo: add in users
 
   const registered = await db
     .insert(residentRegistrations)
