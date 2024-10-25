@@ -2,7 +2,7 @@ import * as residentRegistrationDAL from "./dal";
 import { findBuildingById } from "../buildings/dal";
 import { TResidentRegisterForm } from "./types";
 
-export const validateAccessCode = async (
+const validateAccessCode = async (
   buildingId: string,
   accessCode: string
 ): Promise<boolean> => {
@@ -35,4 +35,10 @@ export const registerResident = async (formData: TResidentRegisterForm) => {
   const registered = await residentRegistrationDAL.createRegistration(formData);
 
   return { success: true, data: registered, message: "Resident registered!" };
+};
+
+export const allRegisterResidents = async () => {
+  const allRegisteredResidents =
+    await residentRegistrationDAL.findAllResidentRegistration();
+  return { success: true, data: allRegisteredResidents };
 };

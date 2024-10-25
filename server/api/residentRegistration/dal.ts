@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../db/db";
 import { residentRegistrations } from "../../db/schema/residentRegistrations";
+import { buildings } from "../../db/schema/buildings";
 
 // stub this layer to test it
 export const createRegistration = async (residentForm: any) => {
@@ -18,7 +19,9 @@ export const createRegistration = async (residentForm: any) => {
 };
 
 export const findAllResidentRegistration = async () => {
-  const allResidentRegistration = await db.select().from(residentRegistrations);
+  const allResidentRegistration = await db.query.residentRegistrations.findMany(
+    { with: { building: true } }
+  );
   return allResidentRegistration;
 };
 

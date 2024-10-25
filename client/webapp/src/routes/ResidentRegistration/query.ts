@@ -24,3 +24,14 @@ export const useResidentRegForm = () =>
       });
     },
   });
+
+export const useAllRegisteredResident = () =>
+  useQuery({
+    queryKey: ["all_registered_resident"],
+    queryFn: async () => {
+      const response = await fetch("/api/resident-registration/all");
+      const responseData = await response.json();
+      const data = responseData.data;
+      return data.data;
+    },
+  });
