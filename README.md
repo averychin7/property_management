@@ -17,22 +17,32 @@
 - Drizzle / Postgres
 - npm (package manager)
 
-### File and Folder structure in server
+### Backend Code structure
 
-- colocation structure
-- kebab-case for different components in a feature folder except testing files
+- 3 layer architecture
+  - Route
+    - all the api routes
+  - Controller
+    - it can be also call handler
+    - no buisness logic should be in controller
+    - should be used as an ochestation, directing different request to different services
+  - Service
+    - contain all the buisness logic
+  - DAL ( Data Access Layer)
+    - DAO or DTO can be store here
+    - since this is a set of standalone functions for db queries, calling DAL will be easier because DTO and DAO are both objects
+- feature grouping
+
+##### File and Folder structure in server
 
 ```
 ├── api
 │   ├── [featureName]
-│   |   ├── [featureName]-routes.ts         // all the different routes belongs to the
-│   |   ├── [featureName]-controller.ts     // Orchestration ( get request from routes and assigned to different services)
-│   |   ├── [featureName]-service.ts        // all the buisness logic
-feature
-│   |   ├── [featureName]-helpers.ts        // helper function belongs to the feature
-│   |   ├── [featureName]-middleware.ts     // middleware that belongs to the feature (i.e. validation)
-│   │   ├── [featureName]-type.ts           // all the types used in the feature
-│   │   ├── {subFeatureName}                // same module naming process as parent feature
+│   |   ├── routes.ts         // all the different routes belongs to the
+│   |   ├── controller.ts     // Orchestration ( get request from routes and assigned to different services)
+│   |   ├── service.ts        // all the buisness logic feature
+│   |   ├── dal.ts            // data access layer - for DAO and DTO
+│   │   ├── type.ts           // all the types used in the feature
 ├── middleware                              // general middlware (i.e auth)
 ├── utils                                   // general utills functions
 ├── tests
@@ -57,3 +67,7 @@ feature
 - Option 1: `npx drizzle-kit push` (do both generate and migrate)
 
 - Option 2: `npx drizzle-kit generate` then `npx drizzle-kit migrate`
+
+## Testing
+
+### Coding Guidelines (Server)
