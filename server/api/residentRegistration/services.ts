@@ -1,9 +1,7 @@
 import { db } from "../../db/db";
-import { buildings } from "../../db/schema/buildings";
 import { residentRegistrations } from "../../db/schema/residentRegistrations";
 import { findBuildingById } from "../buildings/dal";
 import { TResidentRegistration, TResidentRegisterForm } from "./types";
-import { eq } from "drizzle-orm";
 
 export const accessCodeValidation = async (
   buildingId: string,

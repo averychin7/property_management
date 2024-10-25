@@ -1,20 +1,14 @@
 import { NewBuilding } from "./types";
-import { db } from "../../db/db";
-import { complexes } from "../../db/schema/complexes";
-import { eq, sql } from "drizzle-orm";
-import * as buildingDAL from "./dal";
+import * as buildingsDAL from "./dal";
+import * as complexesDAL from "../complexes/dal";
 /**
  * Add one building
  */
 export const addBuilding = async (data: NewBuilding) => {
   try {
-    const newBuilding = await buildingDAL.createSingleBuilding(data);
+    const newBuilding = await buildingsDAL.createSingleBuilding(data);
 
-    // update complexes building count
-    await db
-      .update(complexes)
-      .set({ noOfBuildings: sql`${complexes.noOfBuildings} + 1` })
-      .where(eq(complexes.id, data.complexId));
+    await complexesDAL.updateBuildingCountInComplex(data.complexId);
 
     return newBuilding;
   } catch (error: any) {
@@ -31,7 +25,7 @@ export const addMultiBuilding = async (buildingList: NewBuilding[]) => {
     b.updatedAt = new Date();
   });
 
-  const newBuildings = await buildingDAL.createMulitpleBuildings(buildingList);
+  const newBuildings = await buildingsDAL.createMulitpleBuildings(buildingList);
 
   return newBuildings;
 };
@@ -41,7 +35,7 @@ export const addMultiBuilding = async (buildingList: NewBuilding[]) => {
  */
 export const fetchAllBuilding = async () => {
   try {
-    const allBuildings = await buildingDAL.findAllBuildings();
+    const allBuildings = await buildingsDAL.findAllBuildings();
 
     return allBuildings;
   } catch (error) {
@@ -56,7 +50,7 @@ export const fetchAllBuilding = async () => {
  */
 export const fetchSingleBuilding = async (buildingId: string) => {
   try {
-    const singleBuilding = await buildingDAL.findBuildingById(buildingId);
+    const singleBuilding = await buildingsDAL.findBuildingById(buildingId);
     return singleBuilding;
   } catch (error) {
     throw error;
@@ -68,7 +62,7 @@ export const fetchSingleBuilding = async (buildingId: string) => {
  */
 export const fetchComplexBuilding = async (complexId: string) => {
   try {
-    const complexBuildings = await buildingDAL.findBuildingsByComplexId(
+    const complexBuildings = await buildingsDAL.findBuildingsByComplexId(
       complexId
     );
     return complexBuildings;

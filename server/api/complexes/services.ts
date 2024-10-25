@@ -3,8 +3,8 @@ import { db } from "../../db/db";
 import { complexes } from "../../db/schema/complexes";
 import { NewBuilding } from "../buildings/types";
 import { addMultiBuilding } from "../buildings/services";
-import { buildings } from "../../db/schema/buildings";
 import { eq } from "drizzle-orm";
+import * as complexesDAL from "./dal";
 
 /**
  * Add a complex
@@ -13,35 +13,28 @@ export const addComplex = async (
   data: NewComplex,
   buildingList: NewBuilding[]
 ) => {
-  const complex = await db
-    .insert(complexes)
-    .values({ ...data, noOfBuildings: buildingList.length })
-    .returning({ insertedId: complexes.id });
+  const complex = await complexesDAL.createSingleComplex(
+    data,
+    buildingList.length
+  );
 
   // add complexId to each buildings
   buildingList.map((b) => {
-    b.complexId = complex[0].insertedId;
+    b.complexId = complex.id;
     b.type = "Condominium";
   });
 
   const newBuildings = await addMultiBuilding(buildingList);
 
-  return { complexId: complex[0].insertedId, buildingList: newBuildings };
+  return { complexId: complex.id, buildingList: newBuildings };
 };
 
 export const fetchAllComplex = async () => {
-  const allComplexes = await db.select().from(complexes);
+  const allComplexes = await complexesDAL.findAllComplexes();
   return allComplexes;
 };
 
 export const fetchSingleComplex = async (complexId: string) => {
-  try {
-    const singleComplex = await db
-      .select()
-      .from(complexes)
-      .where(eq(complexes.id, complexId));
-    return singleComplex;
-  } catch (error) {
-    throw error;
-  }
+  const singleComplex = await complexesDAL.findComplexesById(complexId);
+  return singleComplex;
 };
