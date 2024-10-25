@@ -68,6 +68,23 @@
 
 - Option 2: `npx drizzle-kit generate` then `npx drizzle-kit migrate`
 
-## Testing
+## Testing - Draft
+
+- The test will not be using Mocks
+- Test will be written with Jest
+- Only services layer of each feature will be tested
+- there are 2 types of validation
+  - Data validation: validate inputs
+    - i.e. The format of password is wrong
+    - i.e name is empty
+    - all the following type of validaiton will be handle either in controller layer or middleware, so no testing required
+  - Business Logic Validation: these are the business logic requirements
+    - i.e Resident can only registered if the access code is correct
+    - these are the logic that will be stored in services level
+    - test this logic as there are part of the behaviour
+- Stubs will be use to for almost all of the testing
+  - Some of the functionally in services layer will involve calling a 3rd party sources or persistence layer such as database
+  - Even we organize code in different functions, but they are not pure, so it will be hard to test. Stub will be used
+  - We will be create stub for DAL layer
 
 ### Coding Guidelines (Server)
