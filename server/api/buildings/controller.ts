@@ -12,32 +12,26 @@ export const buildingCreation = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const { name, complexId, accessCode, noOfUnits, noOfFloors, address } =
-      req.body;
+  const { name, complexId, accessCode, noOfUnits, noOfFloors, address } =
+    req.body;
 
-    // validation
+  // create building
+  const buildingData: NewBuilding = {
+    name,
+    accessCode,
+    type: "Condominium",
+    noOfUnits,
+    noOfFloors,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    address,
+    complexId,
+  };
 
-    // create building
-    const buildingData: NewBuilding = {
-      name,
-      accessCode,
-      type: "Condominium",
-      noOfUnits,
-      noOfFloors,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      address,
-      complexId,
-    };
+  const building = await addBuilding(buildingData);
 
-    const building = await addBuilding(buildingData);
-
-    // return building + access code
-    res.status(200).json({ success: true, data: building });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error, message: `` });
-  }
+  // return building + access code
+  res.status(200).json({ success: true, data: building });
 };
 
 export const allBuildings = async (
