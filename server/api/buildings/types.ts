@@ -6,5 +6,6 @@ export enum BUILDING_TYPE {
   //... other types such as commercial, hotel
 }
 
-// create building input
 export type NewBuilding = typeof buildings.$inferInsert;
+
+export type Building = typeof buildings.$inferSelect;
