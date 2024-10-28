@@ -1,7 +1,8 @@
 import { db } from "../../db/db";
 import { complexes } from "../../db/schema/complexes";
-import { sql, eq } from "drizzle-orm";
-import { NewComplex } from "./types";
+import { sql, eq, DrizzleError } from "drizzle-orm";
+import { Complex, NewComplex } from "./types";
+import { DataAccessResponse } from "../../types/DataAccessResponse";
 
 export const updateBuildingCountInComplex = async (complexId: string) => {
   await db
@@ -15,13 +16,28 @@ export const updateBuildingCountInComplex = async (complexId: string) => {
 export const createSingleComplex = async (
   complex: NewComplex,
   noOfBuildings: number
-) => {
-  const newComplex = await db
-    .insert(complexes)
-    .values({ ...complex, noOfBuildings })
-    .returning();
+): Promise<DataAccessResponse<Complex, DrizzleError>> => {
+  try {
+    const newComplex = await db
+      .insert(complexes)
+      .values({ ...complex, noOfBuildings })
+      .returning();
 
-  return newComplex[0];
+    return { success: true, data: newComplex[0] };
+  } catch (error: any) {
+    if (error.code === "23505") {
+      return {
+        success: false,
+        errMessage: "Duplicated Complex",
+        errDetails: error,
+      };
+    }
+    return {
+      success: false,
+      errMessage: error.message,
+      errDetails: error,
+    };
+  }
 };
 
 export const findAllComplexes = async () => {
@@ -35,4 +51,11 @@ export const findComplexesById = async (complexId: string) => {
     .from(complexes)
     .where(eq(complexes.id, complexId));
   return singleComplex[0];
+};
+
+export const findAllComplexWithBuildings = async () => {
+  const allComplexes = await db.query.complexes.findMany({
+    with: { buildings: true },
+  });
+  return allComplexes;
 };

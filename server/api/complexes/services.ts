@@ -6,7 +6,10 @@ import { addMultiBuilding } from "../buildings/services";
 
 /**
  * Add a complex
+ * @param {NewComplex} data - single new complex
+ * @param {NewBuilding[]} buildingList - a list of buildings (can be empty)
  */
+
 export const addComplex = async (
   data: NewComplex,
   buildingList: NewBuilding[]
@@ -16,19 +19,34 @@ export const addComplex = async (
     buildingList.length
   );
 
-  // add complexId to each buildings
+  if (!complex.success) {
+    return { success: false, message: complex.errMessage };
+  }
+
+  if (buildingList.length < 0) {
+    return {
+      success: true,
+      data: { complexId: complex.data.id, buildingList: [] },
+    };
+  }
+
   buildingList.map((b) => {
-    b.complexId = complex.id;
+    b.complexId = complex.data.id;
     b.type = "Condominium";
   });
-
   const newBuildings = await addMultiBuilding(buildingList);
 
-  return { complexId: complex.id, buildingList: newBuildings };
+  return {
+    success: true,
+    data: {
+      complexId: complex.data.id,
+      buildingList: newBuildings,
+    },
+  };
 };
 
 export const fetchAllComplex = async () => {
-  const allComplexes = await complexesDAL.findAllComplexes();
+  const allComplexes = await complexesDAL.findAllComplexWithBuildings();
   return allComplexes;
 };
 

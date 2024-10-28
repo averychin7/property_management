@@ -6,7 +6,7 @@ export const complexes = pgTable("complexes", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: varchar("name", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
   noOfBuildings: integer("no_of_buildings").notNull().default(1),
 });
 

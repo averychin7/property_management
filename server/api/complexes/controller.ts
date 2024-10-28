@@ -13,7 +13,6 @@ export const complexCreation = async (req: Request, res: Response) => {
       .json({ success: false, message: "Complex name is required" });
     return;
   }
-
   // make sure all the building has a name
   const emptyNameBuildings = buildingList.filter(
     (b: NewBuilding) => b.name === ""
@@ -27,7 +26,12 @@ export const complexCreation = async (req: Request, res: Response) => {
 
   const newComplex = await addComplex(complex, buildingList);
 
-  res.status(200).json({ success: true, data: newComplex });
+  if (!newComplex.success) {
+    res.status(400).json({ success: false, err: newComplex.message });
+    return;
+  }
+
+  res.status(200).json({ success: true, data: newComplex.data });
 };
 
 export const allComplexes = async (req: Request, res: Response) => {
